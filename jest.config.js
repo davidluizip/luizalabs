@@ -1,0 +1,48 @@
+const config = {
+  moduleFileExtensions: ['js', 'json', 'ts'],
+  modulePaths: ['<rootDir>'],
+  preset: 'ts-jest',
+  rootDir: '.',
+  testRegex: '.*\\.spec\\.ts$',
+  transform: {
+    '^.+\\.{ts|tsx}?$': [
+      'ts-jest',
+      {
+        babel: true,
+        tsConfig: 'tsconfig.json',
+      },
+    ],
+  },
+  collectCoverageFrom: [
+    'src/**/*.ts',
+    '!src/main.ts',
+    '!src/**/*.index.ts',
+    '!src/**/*.schema.ts',
+    '!src/**/*.module.ts',
+    '!src/**/*.middleware.ts',
+    '!src/**/*.decorator.ts',
+    '!src/**/*.interceptors.ts',
+    '!src/**/*.filter.ts',
+    '!src/**/*.data.ts',
+    '!src/core/**',
+  ],
+  coverageDirectory: './coverage',
+  testEnvironment: 'node',
+  moduleNameMapper: {
+    '^src/(.*)$': '<rootDir>/src/$1',
+    '^@modules/(.*)$': '<rootDir>/src/modules/$1',
+    '^@configurations/(.*)$': '<rootDir>/src/core/configurations/$1',
+    '^@dto/(.*)$': '<rootDir>/src/core/dto/$1',
+    '^@interfaces/(.*)$': '<rootDir>/src/core/interfaces/$1',
+    '^@base/(.*)$': '<rootDir>/src/core/base/$1',
+    '^@decorators/(.*)$': '<rootDir>/src/core/decorators/$1',
+    '^@guard/(.*)$': '<rootDir>/src/core/guard/$1',
+    '^@abstracts/(.*)$': '<rootDir>/src/core/abstracts/$1',
+    '^@constants/(.*)$': '<rootDir>/src/core/constants/$1',
+    '^@shared/(.*)$': '<rootDir>/src/shared/$1',
+    '^@db/(.*)$': '<rootDir>/src/core/db/$1',
+    '^@enums/(.*)$': '<rootDir>/src/core/enums/$1',
+    '^@authentication/(.*)$': '<rootDir>/src/core/authentication/$1',
+  },
+};
+module.exports = config;
