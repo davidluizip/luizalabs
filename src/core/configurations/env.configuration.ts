@@ -1,7 +1,7 @@
 import { Logger } from '@nestjs/common';
 import { Type, plainToClass } from 'class-transformer';
 import { IsEnum, ValidateNested, validateSync } from 'class-validator';
-import { APIDTO, CACHEDTO, SALESFORCEDTO } from 'core/dto/envs.dto';
+import { APIDTO, CACHEDTO } from '../dto/envs.dto';
 
 export const configuration = () => ({
   NODE_ENV: process.env.NODE_ENV,
@@ -10,12 +10,6 @@ export const configuration = () => ({
     host: process.env.API_HOST,
     jwt: {
       secret: process.env.API_SECRET_API,
-    },
-  },
-  routes: {
-    productsImports: {
-      url: process.env.PRODUCT_IMPORT_URL,
-      secret: process.env.PRODUCT_IMPORT_SECRET,
     },
   },
 });
@@ -35,10 +29,6 @@ class EnvironmentVariables {
   @ValidateNested({ each: true })
   @Type(() => CACHEDTO)
   cache: CACHEDTO;
-
-  @ValidateNested({ each: true })
-  @Type(() => SALESFORCEDTO)
-  salesForce: SALESFORCEDTO;
 
   @IsEnum(Environment)
   NODE_ENV: Environment;

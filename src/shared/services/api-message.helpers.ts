@@ -5,6 +5,8 @@ interface IAPIMESSAGERES {
   code: number;
   message: string;
 }
+
+// Constante APIMESSAGE que contém funções que retornam objetos estruturados de mensagem de API com código e mensagem.
 export const APIMESSAGE: TAPIMESSAGE = {
   NOTFOUND: (message = 'não encontrado') => {
     return {
@@ -32,7 +34,7 @@ export const APIMESSAGE: TAPIMESSAGE = {
       message,
     };
   },
-  BFFAUTHORIZATION: (message = 'sem autorização para acessar este serviço') => {
+  UNAUTHORIZED: (message = 'sem autorização para acessar este serviço') => {
     return {
       code: 14,
       message,

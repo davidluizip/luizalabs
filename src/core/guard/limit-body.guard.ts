@@ -1,3 +1,4 @@
+import { Result } from '@base/results-api.base';
 import {
   CanActivate,
   ExecutionContext,
@@ -7,7 +8,6 @@ import {
   applyDecorators,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Result } from 'core/base/results-api.base';
 
 @Injectable()
 export class LimitGuard implements CanActivate {

@@ -12,8 +12,10 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
+import { EventEmitterModule } from '@nestjs/event-emitter';
 import { ImportFilesModule } from './modules/import-files/import-files.module';
 import { UsersModule } from './modules/users/users.module';
+import { OrdersModule } from './modules/orders/orders.module';
 
 @Module({
   imports: [
@@ -23,6 +25,8 @@ import { UsersModule } from './modules/users/users.module';
     AutenticateModule,
     ImportFilesModule,
     UsersModule,
+    EventEmitterModule.forRoot(),
+    OrdersModule,
   ],
   controllers: [],
   providers: [],

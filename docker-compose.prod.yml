@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      dockerfile: ./docker/node.dockerfile
+      context: .
+      target: production
+    image: luizlabs/node
+    container_name: node_luizlabs
+    restart: on-failure:5
+    ports:
+      - ${API_PORT}:3333
+      - 9229:9229
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules/bcrypt
+    networks:
+      - luizlabs_network
+
+networks:
+  luizlabs_network:
+    driver: bridge

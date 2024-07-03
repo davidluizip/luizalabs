@@ -51,4 +51,30 @@ export class HealthController {
       throw new Error('Erro no health check');
     }
   }
+  @Get('orders-entity')
+  @HealthCheck()
+  async checkOrdersEntity() {
+    const filePath = path.resolve(
+      __dirname,
+      '../../../data/orders/data-orders.json',
+    );
+    const healthResponse = new HealthCheckDTO();
+
+    try {
+      const exists = await fs.pathExists(filePath);
+
+      if (!exists) {
+        healthResponse.status = 'nok';
+        healthResponse.error = { message: 'File not found' };
+        return healthResponse;
+      }
+
+      healthResponse.status = 'ok';
+      healthResponse.message = 'File found';
+      return healthResponse;
+    } catch (error) {
+      console.error('Erro ao verificar arquivo orders.json:', error.message);
+      throw new Error('Erro no health check');
+    }
+  }
 }

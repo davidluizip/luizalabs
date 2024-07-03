@@ -1,9 +1,9 @@
 import { Result } from '@base/results-api.base';
 import { UsersService } from '@modules/users/users.service';
+import { ValidateBuilder } from '@modules/users/validate/validate-builder';
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { APIMESSAGE } from '@shared/services/api-message.helpers';
-import { UserValidateService } from '@shared/services/user-validate.service';
 
 export interface IAuthRequest {
   username: string;
@@ -38,9 +38,16 @@ export class AutenticateService {
     try {
       const user = await this.usersService.findOne(username);
 
-      UserValidateService.userName(user, username).password(user, password);
+      ValidateBuilder.setEntity(user)
+        .userName(username)
+        .password(password)
+        .build();
 
-      const payload = { sub: user.userId, username: user.username };
+      const payload = {
+        sub: user.userId,
+        username: user.username,
+        role: user.role,
+      };
 
       const access_token = await this.jwtService.signAsync(payload);
 

@@ -1,7 +1,10 @@
+import { Result } from '@base/results-api.base';
 import {
   BadRequestException,
   CanActivate,
   ExecutionContext,
+  HttpException,
+  HttpStatus,
   Inject,
   Logger,
   UnauthorizedException,
@@ -30,7 +33,14 @@ export class RolesGuard implements CanActivate {
 
     if (!requiredRoles) {
       this.logger.error(`permission not set for route ${request.route.path}`);
-      return false;
+      throw new HttpException(
+        Result.Fail(
+          'RolesGuard',
+          APIMESSAGE.NOTPERMISSION(),
+          HttpStatus.UNAUTHORIZED,
+        ),
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     return this.validateRequest(request, requiredRoles);
@@ -41,7 +51,7 @@ export class RolesGuard implements CanActivate {
     requiredRoles: ProfileUserEnum[],
   ): boolean {
     try {
-      const role = req.user['roles'];
+      const role = req.user['role'];
 
       if (
         Array.isArray(requiredRoles) &&
@@ -59,6 +69,6 @@ export class RolesGuard implements CanActivate {
   }
 
   private matchRoles(roles: ProfileUserEnum[], userRole: string): boolean {
-    return roles.some((role) => role === userRole);
+    return roles.some((role) => role === userRole.toLocaleUpperCase());
   }
 }

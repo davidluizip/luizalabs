@@ -32,14 +32,6 @@
 $ npm install
 ```
 
-## Before Running the app
-
-```bash
-# development
-$ npm run postgres:generate
-
-```
-
 ## Running the app
 
 ```bash
@@ -56,7 +48,7 @@ $ npm run start:dev
 $ npm run start:stg
 
 # production mode
-$ npm run start:prd
+$ npm run start:prod
 ```
 
 ## Test

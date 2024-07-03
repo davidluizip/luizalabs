@@ -6,6 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 
+import { Result } from '@base/results-api.base';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TResult } from '../types/types';
@@ -18,7 +19,6 @@ export interface IPagination {
   page: number;
   limit: number;
   totalResultRows: number;
-  totalPages: number;
 }
 
 export type IData<T> = T extends T ? T : T[];
@@ -52,9 +52,13 @@ export class TransformInterceptor<T>
         return data;
       }),
       catchError((error) => {
-        if (error?.code === 'ERR_HTTP_HEADERS_SENT')
-          return throwError(() => null);
-        return throwError(() => error);
+        return throwError(
+          () =>
+            new HttpException(
+              Result.Fail('internal', error?.message, 400),
+              400,
+            ),
+        );
       }),
     );
   }

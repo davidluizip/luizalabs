@@ -1,6 +1,6 @@
 // validate-filters.decorator.ts
 import { Result } from '@base/results-api.base';
-import { IUserSessionBase } from '@interfaces/user-response.interface';
+import { IUserSession } from '@interfaces/user-response.interface';
 import { ExecutionContext, createParamDecorator } from '@nestjs/common';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
@@ -8,9 +8,7 @@ import { validate } from 'class-validator';
 export const ValidParams = createParamDecorator(
   async (dto: new (obj: any) => any, ctx: ExecutionContext) => {
     try {
-      const { filters, pagination, order, user } = ctx
-        .switchToHttp()
-        .getRequest();
+      const { filters, pagination, order } = ctx.switchToHttp().getRequest();
 
       if (dto) {
         const dtoInstance = new dto(filters);
@@ -31,7 +29,6 @@ export const ValidParams = createParamDecorator(
           pagination,
           orderBy: order,
           filters: removeUndefinedProperties(filtersDTO),
-          user,
         };
       }
 
@@ -39,7 +36,6 @@ export const ValidParams = createParamDecorator(
         pagination,
         orderBy: order,
         filters: null,
-        user,
       };
     } catch (error) {
       console.log(error);
@@ -48,7 +44,7 @@ export const ValidParams = createParamDecorator(
 );
 
 export const GetUserSession = createParamDecorator(
-  async (data: unknown, ctx: ExecutionContext): Promise<IUserSessionBase> => {
+  async (data: unknown, ctx: ExecutionContext): Promise<IUserSession> => {
     try {
       const { user } = ctx.switchToHttp().getRequest();
 
@@ -59,7 +55,7 @@ export const GetUserSession = createParamDecorator(
         return null;
       }
 
-      return user as IUserSessionBase;
+      return user as IUserSession;
     } catch (error) {
       console.log(error);
     }

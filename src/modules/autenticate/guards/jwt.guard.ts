@@ -4,11 +4,15 @@ import { AuthGuard } from '@nestjs/passport';
 import { APIMESSAGE } from '@shared/services/api-message.helpers';
 
 @Injectable()
-export class JwtAuthGuard extends AuthGuard(['jwt', 'x-micro-key']) {
+export class JwtAuthGuard extends AuthGuard(['jwt']) {
   handleRequest(err, user) {
     if (err || !user) {
       throw new HttpException(
-        Result.Fail(APIMESSAGE.BFFAUTHORIZATION(), HttpStatus.UNAUTHORIZED),
+        Result.Fail(
+          'JwtAuthGuard',
+          APIMESSAGE.BFFAUTHORIZATION(),
+          HttpStatus.UNAUTHORIZED,
+        ),
         HttpStatus.UNAUTHORIZED,
       );
     }
