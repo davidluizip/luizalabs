@@ -10,7 +10,7 @@ export class JwtAuthGuard extends AuthGuard(['jwt']) {
       throw new HttpException(
         Result.Fail(
           'JwtAuthGuard',
-          APIMESSAGE.BFFAUTHORIZATION(),
+          APIMESSAGE.UNAUTHORIZED(),
           HttpStatus.UNAUTHORIZED,
         ),
         HttpStatus.UNAUTHORIZED,

@@ -28,7 +28,7 @@ export class ImportFilesController {
 
   @Post()
   @UseGuards(LimitGuard, JwtAuthGuard, RolesGuard)
-  @Roles(ProfileUserEnum.PUBLIC)
+  @Roles(ProfileUserEnum.ADMIN)
   @Limit(10 * 1024 * 1024 * 1.1) // recebendo payload de 1.17mb e com uma margem de 10% de 1.1
   @ApiConsumes('multipart/form-data')
   @ApiBody({
