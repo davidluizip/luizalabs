@@ -6,8 +6,7 @@ import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 export class GetllParamsDTO extends PaginationRequestDTO {
   @ApiProperty({
     required: false,
-    example: '4509.202',
-    description: 'Sku do produto.',
+    description: 'Id do usuário.',
   })
   @IsString()
   @IsNotEmpty()
@@ -16,8 +15,7 @@ export class GetllParamsDTO extends PaginationRequestDTO {
 
   @ApiProperty({
     required: false,
-    example: 'Deca',
-    description: 'Nome da Empresa.',
+    description: 'Id do produto.',
   })
   @IsString()
   @IsNotEmpty()
@@ -26,14 +24,17 @@ export class GetllParamsDTO extends PaginationRequestDTO {
 
   @ApiProperty({
     required: false,
-    example: 'Deca',
-    description: 'Nome da Empresa.',
+    description: 'Data de início.',
   })
   @IsString()
   @IsNotEmpty()
   @IsOptional()
   dateStart?: string;
 
+  @ApiProperty({
+    required: false,
+    description: 'Data de fim.',
+  })
   @IsString()
   @IsNotEmpty()
   @IsOptional()
